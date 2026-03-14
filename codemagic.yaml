@@ -1,0 +1,17 @@
+workflows:
+  ios-workflow:
+    name: iOS Build
+    scripts:
+      - name: Build iOS app
+        script: |
+          xcodebuild -workspace RansomApp.xcworkspace \
+                     -scheme RansomApp \
+                     -sdk iphoneos \
+                     -configuration Release archive \
+                     -archivePath $PWD/build/RansomApp.xcarchive
+          xcodebuild -exportArchive \
+                     -archivePath $PWD/build/RansomApp.xcarchive \
+                     -exportOptionsPlist ExportOptions.plist \
+                     -exportPath $PWD/build
+    artifacts:
+      - build/*.ipa
